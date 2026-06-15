@@ -1,0 +1,1554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mompou Association Inc</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    :root {
+      --forest:    #075985; /* Deep Sky Blue Primary */
+      --gold:      #c9a84c;
+      --sand:      #e0f2fe; /* Light Sky Blue Accent */
+      --clay:      #d4522a;
+      --white:     #ffffff;
+      --charcoal:  #2c2c2c;
+      --muted:     #475569;
+      --light-bg:  #f8fafc;
+      --border:    #bae6fd;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Source Sans 3', sans-serif;
+      background: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 50%, #f0f9ff 100%);
+      background-attachment: fixed;
+      color: var(--charcoal);
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    /* ===== NAVBAR ===== */
+    nav {
+      background: var(--forest);
+      position: sticky; top: 0; z-index: 1000;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+    }
+    .nav-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2rem; height: 70px;
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 12px; text-decoration: none;
+      cursor: pointer;
+    }
+    .nav-logo-icon {
+      width: 44px; height: 44px;
+      border-radius: 50%; object-fit: cover; background: var(--gold);
+    }
+    .nav-logo-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem; font-weight: 700; color: var(--white);
+      line-height: 1.2;
+    }
+    .nav-logo-text span { display: block; font-size: 0.7rem; font-weight: 300; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; }
+    .nav-links { display: flex; gap: 0.5rem; list-style: none; }
+    .nav-links a {
+      color: rgba(255,255,255,0.85);
+      text-decoration: none; padding: 0.5rem 1rem;
+      font-size: 0.9rem; font-weight: 600; letter-spacing: 0.5px;
+      border-radius: 4px; transition: all 0.2s;
+      text-transform: uppercase;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--gold); background: rgba(201,168,76,0.12);
+    }
+    .hamburger { display: none; flex-direction: column; gap: 6px; cursor: pointer; padding: 5px; z-index: 1001; }
+    .hamburger span { width: 26px; height: 2px; background: var(--white); border-radius: 2px; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); transform-origin: center; }
+    
+    /* Hamburger Animation States */
+    .hamburger.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+    .hamburger.active span:nth-child(2) { opacity: 0; transform: translateX(-10px); }
+    .hamburger.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+    /* ===== PAGE SYSTEM ===== */
+    .page { display: none; animation: fadeIn 0.5s ease; }
+    .page.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* ===== HERO ===== */
+    .hero {
+      min-height: 90vh;
+      background: linear-gradient(165deg, #38bdf8 0%, #0ea5e9 30%, #075985 70%, #0c4a6e 100%);
+      box-shadow: inset 0 -100px 100px -50px rgba(0,0,0,0.2);
+      display: flex; align-items: center; position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c9a84c' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .hero-decor {
+      position: absolute; right: -80px; top: 50%; transform: translateY(-50%);
+      width: 500px; height: 500px; border-radius: 50%;
+      border: 1px solid rgba(201,168,76,0.15);
+    }
+    .hero-decor::before {
+      content: ''; position: absolute; inset: 40px; border-radius: 50%;
+      border: 1px solid rgba(201,168,76,0.1);
+    }
+    .hero-content { max-width: 1200px; margin: 0 auto; padding: 4rem 2rem; position: relative; z-index: 1; }
+    .hero-tag {
+      display: inline-block; background: var(--gold); color: var(--forest);
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+      padding: 6px 16px; border-radius: 2px; margin-bottom: 1.5rem;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 6vw, 5rem); font-weight: 900;
+      color: var(--white); line-height: 1.1; max-width: 700px;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 em { color: var(--gold); font-style: normal; }
+    .hero p {
+      font-size: 1.15rem; color: rgba(255,255,255,0.75);
+      max-width: 560px; line-height: 1.8; margin-bottom: 2.5rem;
+    }
+    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--gold); color: var(--forest);
+      padding: 0.85rem 2rem; border: none; border-radius: 3px;
+      font-size: 0.95rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 1px; cursor: pointer; text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-primary:hover { background: #e0b95c; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(201,168,76,0.4); }
+    .btn-outline {
+      background: transparent; color: var(--white);
+      padding: 0.85rem 2rem; border: 1px solid rgba(255,255,255,0.35);
+      border-radius: 3px; font-size: 0.95rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 1px; cursor: pointer;
+      text-decoration: none; transition: all 0.2s;
+    }
+    .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* ===== PILLARS SECTION ===== */
+    .section { max-width: 1200px; margin: 0 auto; padding: 5rem 2rem; }
+    .section-label {
+      font-size: 0.7rem; letter-spacing: 4px; text-transform: uppercase;
+      color: var(--gold); font-weight: 700; margin-bottom: 0.75rem;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700;
+      color: var(--forest); margin-bottom: 1rem;
+    }
+    .section-subtitle { font-size: 1.05rem; color: var(--muted); max-width: 520px; line-height: 1.7; margin-bottom: 3rem; }
+
+    .pillars-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+    .pillar-card {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 8px; padding: 2.5rem; position: relative;
+      overflow: hidden; transition: all 0.3s;
+    }
+    .pillar-card::after {
+      content: ''; position: absolute; bottom: 0; left: 0;
+      width: 0; height: 4px; background: var(--gold);
+      transition: width 0.4s ease;
+    }
+    .pillar-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(7, 89, 133, 0.15); }
+    .pillar-card:hover::after { width: 100%; }
+    .pillar-icon {
+      width: 70px; height: 70px; 
+      background: linear-gradient(135deg, rgba(255,255,255,0.8), rgba(224, 242, 254, 0.4));
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(186, 230, 253, 0.8);
+      border-radius: 18px; display: flex; align-items: center; justify-content: center;
+      font-size: 2rem; margin-bottom: 1.5rem;
+      color: var(--forest);
+      box-shadow: 0 8px 15px rgba(0,0,0,0.05), inset 0 0 15px rgba(255,255,255,0.5);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      animation: float 4s ease-in-out infinite;
+    }
+    .pillar-card:hover .pillar-icon { transform: rotate(10deg) scale(1.1); background: var(--gold); color: var(--white); border-color: var(--gold); }
+    .pillar-card h3 {
+      font-family: 'Playfair Display', serif; font-size: 1.3rem;
+      color: var(--forest); margin-bottom: 0.75rem;
+    }
+    .pillar-card p { font-size: 0.95rem; color: var(--muted); line-height: 1.7; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    /* ===== STATS BAR ===== */
+    .stats-bar { 
+      background: linear-gradient(90deg, #075985 0%, #0c4a6e 100%);
+      padding: 3rem 2rem; 
+    }
+    .stats-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-around; flex-wrap: wrap; gap: 2rem; text-align: center; }
+    .stat-item {}
+    .stat-num { font-family: 'Playfair Display', serif; font-size: 2.8rem; font-weight: 700; color: var(--gold); }
+    .stat-lbl { font-size: 0.85rem; color: rgba(255,255,255,0.6); letter-spacing: 1px; text-transform: uppercase; margin-top: 4px; }
+
+    /* ===== LATEST NEWS PREVIEW ===== */
+    .news-preview-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+    .news-card {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 8px; overflow: hidden; transition: all 0.3s;
+    }
+    .news-card:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(0,0,0,0.1); }
+    .news-card-img { height: 180px; display: flex; align-items: center; justify-content: center; overflow: hidden; font-size: 3rem; color: var(--white); }
+    .news-card-img img { width: 100%; height: 100%; object-fit: cover; }
+    .nc-green { background: linear-gradient(135deg, #0369a1, #0ea5e9); }
+    .nc-gold  { background: linear-gradient(135deg, #7a5c1e, #c9a84c); }
+    .nc-clay  { background: linear-gradient(135deg, #7a2810, #d4522a); }
+    .news-card-body { padding: 1.5rem; }
+    .news-tag {
+      font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase;
+      font-weight: 700; color: var(--gold); margin-bottom: 0.6rem;
+    }
+    .news-card h4 { font-family: 'Playfair Display', serif; font-size: 1.15rem; color: var(--forest); margin-bottom: 0.6rem; line-height: 1.4; }
+    .news-card p { font-size: 0.88rem; color: var(--muted); line-height: 1.6; margin-bottom: 1rem; }
+    .news-date { font-size: 0.78rem; color: var(--muted); }
+    .read-more { color: var(--forest); font-size: 0.85rem; font-weight: 700; text-decoration: none; border-bottom: 1px solid var(--gold); cursor: pointer; }
+
+    /* ===== PAGE HERO ===== */
+    .page-hero {
+      background: linear-gradient(135deg, #0ea5e9 0%, #075985 50%, #0c4a6e 100%);
+      padding: 5rem 2rem; text-align: center; position: relative; overflow: hidden;
+    }
+    .page-hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c9a84c' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .page-hero-content { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; }
+    .page-hero span { display: inline-block; background: var(--gold); color: var(--forest); font-size: 0.65rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; padding: 5px 14px; border-radius: 2px; margin-bottom: 1rem; }
+    .page-hero h2 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3.5rem); color: var(--white); margin-bottom: 1rem; }
+    .page-hero p { color: rgba(255,255,255,0.7); font-size: 1rem; line-height: 1.8; }
+
+    /* ===== NEWS PAGE ===== */
+    .news-category-header {
+      margin: 4rem 0 2rem;
+      position: relative;
+      padding-left: 1.25rem;
+      border-left: 5px solid var(--gold);
+      background: linear-gradient(90deg, var(--sand), transparent);
+      padding-top: 0.75rem;
+      padding-bottom: 0.75rem;
+      border-radius: 0 8px 8px 0;
+    }
+    .news-category-header h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      color: var(--forest);
+      letter-spacing: 0.5px;
+    }
+    .news-full-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 2rem; }
+    .news-full-card {
+      background: var(--white); border: 1px solid var(--border); border-radius: 8px; overflow: hidden;
+      transition: all 0.3s;
+    }
+    .news-full-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,0.1); }
+    .news-full-img { height: 200px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+    .news-full-img img { width: 100%; height: 100%; object-fit: cover; }
+    .news-full-body { padding: 1.75rem; }
+    .news-full-body .meta { display: flex; gap: 1rem; align-items: center; margin-bottom: 0.8rem; }
+    .badge { background: var(--sand); color: var(--forest); font-size: 0.65rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 10px; border-radius: 2px; }
+    .news-full-body h3 { font-family: 'Playfair Display', serif; font-size: 1.25rem; color: var(--forest); margin-bottom: 0.75rem; line-height: 1.4; }
+    .news-full-body p { font-size: 0.92rem; color: var(--muted); line-height: 1.7; }
+
+    /* ===== SERVICES ===== */
+    .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 2rem; }
+    .service-card {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 8px; padding: 2.5rem; transition: all 0.3s; position: relative;
+    }
+    .service-card:hover { box-shadow: 0 16px 40px rgba(0,0,0,0.08); transform: translateY(-3px); }
+    .service-num { font-family: 'Playfair Display', serif; font-size: 4rem; font-weight: 900; color: var(--sand); position: absolute; top: 1rem; right: 1.5rem; }
+    .service-card .icon { 
+      font-size: 2.5rem; margin-bottom: 1.5rem; color: var(--forest);
+      filter: drop-shadow(0 5px 10px rgba(7, 89, 133, 0.2));
+      transition: all 0.3s ease;
+    }
+    .service-card:hover .icon { transform: scale(1.2); color: var(--gold); }
+    .service-card h3 { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--forest); margin-bottom: 0.75rem; }
+    .service-card p { font-size: 0.93rem; color: var(--muted); line-height: 1.7; margin-bottom: 1.25rem; }
+    .service-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .stag { background: var(--sand); color: var(--forest); font-size: 0.72rem; font-weight: 600; padding: 4px 10px; border-radius: 20px; }
+
+    /* ===== PROJECTS ===== */
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem; }
+    .project-card {
+      background: var(--white); border: 1px solid var(--border); border-radius: 8px; overflow: hidden;
+      transition: all 0.3s;
+    }
+    .project-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,0.1); }
+    .project-img { height: 160px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+    .project-img img { width: 100%; height: 100%; object-fit: cover; }
+    .p-green { background: linear-gradient(135deg, #1a3a2a 0%, #2a5c3a 100%); }
+    .p-gold  { background: linear-gradient(135deg, #5c3d10, #c9a84c); }
+    .p-clay  { background: linear-gradient(135deg, #5c2010, #d4522a); }
+    .p-blue  { background: linear-gradient(135deg, #10305c, #2a6cbd); }
+    .p-purple{ background: linear-gradient(135deg, #2a1050, #7c3aed); }
+    .p-teal  { background: linear-gradient(135deg, #0a3030, #0d9488); }
+    .project-body { padding: 1.5rem; }
+    .project-body .status { display: inline-block; font-size: 0.65rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 10px; border-radius: 20px; margin-bottom: 0.75rem; }
+    .status-active { background: #d1fae5; color: #065f46; }
+    .status-planning { background: #fef3c7; color: #92400e; }
+    .status-complete { background: #dbeafe; color: #1e40af; }
+    .project-body h3 { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--forest); margin-bottom: 0.6rem; }
+    .project-body p { font-size: 0.88rem; color: var(--muted); line-height: 1.6; margin-bottom: 1rem; }
+    .progress-wrap { margin-top: 0.5rem; }
+    .progress-label { display: flex; justify-content: space-between; font-size: 0.78rem; color: var(--muted); margin-bottom: 5px; }
+    .progress-bar { height: 6px; background: var(--sand); border-radius: 3px; overflow: hidden; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, var(--forest), var(--gold)); border-radius: 3px; transition: width 1s ease; }
+
+    .about-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+    .profile-card { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 1.75rem; }
+    .profile-card h3 { font-family: 'Playfair Display', serif; margin-bottom: 1rem; color: var(--forest); }
+    .profile-card ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.45rem; }
+    .profile-card li { padding: 0.75rem 0.9rem; background: var(--light-bg); border-radius: 8px; border: 1px solid rgba(0,0,0,0.04); color: var(--charcoal); }
+
+    /*about page*/
+    .about-tabs { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 2rem; justify-content: center; }
+    .tab-button {
+      border: 2px solid var(--gold); background: rgba(255,255,255,0.08);
+      color: var(--forest); padding: 0.95rem 1.5rem; border-radius: 50px;
+      cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      font-weight: 700; letter-spacing: 1px; text-transform: uppercase; font-size: 0.85rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+    .tab-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(201,168,76,0.25);
+      border-color: var(--gold);
+    }
+    .tab-button.active {
+      background: linear-gradient(135deg, var(--gold), #e0b95c);
+      color: var(--forest);
+      box-shadow: 0 14px 40px rgba(201,168,76,0.35);
+      transform: scale(1.05);
+    }
+
+    .about-panel {
+      display: none; opacity: 0; transform: translateY(30px);
+      transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      animation: panelEntry 0.6s ease-out forwards;
+    }
+    @keyframes panelEntry { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+    .about-panel.active { display: block; opacity: 1; transform: translateY(0); }
+    .panel-description {
+      font-size: 1rem; color: var(--muted); margin-bottom: 2rem;
+      padding: 1.25rem; background: linear-gradient(135deg, var(--sand), rgba(255,255,255,0.5));
+      border-radius: 10px; border-left: 4px solid var(--gold);
+    }
+    .member-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.25rem;
+    }
+    .member-card {
+      border-radius: 16px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      background: var(--white); border: 1px solid var(--border);
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      animation: cardSlideIn 0.5s ease-out forwards;
+    }
+    @keyframes cardSlideIn { from { opacity: 0; transform: translateY(20px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
+    .member-card:nth-child(2) { animation-delay: 0.05s; }
+    .member-card:nth-child(3) { animation-delay: 0.1s; }
+    .member-card:nth-child(4) { animation-delay: 0.15s; }
+    .member-card:nth-child(5) { animation-delay: 0.2s; }
+    .member-card:nth-child(6) { animation-delay: 0.25s; }
+    .member-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.12);
+      border-color: var(--gold);
+    }
+    .member-toggle {
+      width: 100%; border: none;
+      background: linear-gradient(135deg, rgba(201,168,76,0.1), rgba(255,255,255,0.98));
+      padding: 1.15rem 1.4rem; text-align: left; font-size: 1rem; font-weight: 700;
+      color: var(--forest); cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+      transition: all 0.25s ease;
+      position: relative;
+    }
+    .member-toggle::after {
+      content: '▼'; display: inline-block; margin-left: 0.75rem; transition: transform 0.3s ease;
+      color: var(--gold); font-size: 0.75rem; font-weight: 900;
+    }
+    .member-toggle:hover {
+      background: linear-gradient(135deg, rgba(201,168,76,0.15), rgba(255,255,255,1));
+    }
+    .member-toggle:focus { outline: 2px solid var(--gold); outline-offset: -2px; }
+    .member-card.expanded .member-toggle { background: linear-gradient(135deg, var(--gold), #e0b95c); color: var(--forest); }
+    .member-card.expanded .member-toggle::after { transform: rotate(180deg); color: var(--forest); }
+    .member-details {
+      max-height: 0; overflow: hidden; transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), padding 0.35s ease;
+      background: linear-gradient(135deg, #f9f5ee, #ffffff);
+      border-top: 1px solid var(--border);
+    }
+    .member-details.open {
+      max-height: 280px; padding: 1.25rem 1.4rem;
+    }
+    .member-details p {
+      margin-bottom: 1rem; color: var(--charcoal); line-height: 1.7; font-size: 0.92rem;
+    }
+    .member-details strong { color: var(--forest); font-weight: 700; }
+    .member-details a { color: var(--gold); text-decoration: none; transition: color 0.2s; }
+    .member-details a:hover { color: var(--forest); text-decoration: underline; }
+
+
+    /* ===== CONTACT ===== */
+    .contact-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 4rem; }
+    .contact-info h3 { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--forest); margin-bottom: 1rem; }
+    .contact-info p { font-size: 0.95rem; color: var(--muted); line-height: 1.8; margin-bottom: 2rem; }
+    .contact-detail { display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 1.5rem; }
+    .contact-detail-icon { 
+      width: 50px; height: 50px; 
+      background: linear-gradient(135deg, var(--sand), #ffffff);
+      border: 1px solid var(--border);
+      border-radius: 12px; display: flex; align-items: center; justify-content: center; 
+      font-size: 1.3rem; flex-shrink: 0; color: var(--forest);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      transition: all 0.3s ease;
+    }
+    .contact-detail:hover .contact-detail-icon { background: var(--forest); color: var(--white); transform: scale(1.1); }
+    .contact-detail-text strong { display: block; font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase; color: var(--forest); margin-bottom: 2px; }
+    .contact-detail-text span { font-size: 0.92rem; color: var(--muted); }
+    .contact-form { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 2.5rem; }
+    .contact-form h3 { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--charcoal); margin-bottom: 1.75rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 1rem; }
+    .form-group label { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; color: var(--forest); }
+    .form-group input, .form-group select, .form-group textarea {
+      border: 1px solid var(--border); border-radius: 5px;
+      padding: 0.75rem 1rem; font-family: 'Source Sans 3', sans-serif;
+      font-size: 0.93rem; color: var(--charcoal); background: var(--light-bg);
+      transition: border-color 0.2s;
+      outline: none;
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--forest); background: var(--white); }
+    .form-group textarea { resize: vertical; min-height: 120px; }
+    .form-submit { width: 100%; background: var(--forest); color: var(--white); border: none; border-radius: 5px; padding: 1rem; font-size: 0.95rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; transition: all 0.2s; }
+    .form-submit:hover { background: #0f2419; box-shadow: 0 6px 20px rgba(26,58,42,0.3); }
+    .success-msg { display: none; background: #d1fae5; color: #065f46; padding: 1rem; border-radius: 5px; text-align: center; font-weight: 600; margin-top: 1rem; }
+
+    /* ===== FOOTER ===== */
+    footer { background: var(--forest); color: rgba(255,255,255,0.7); padding: 4rem 2rem 2rem; }
+    .footer-inner { max-width: 1200px; margin: 0 auto; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+    .footer-brand h3 { font-family: 'Playfair Display', serif; color: var(--white); font-size: 1.4rem; margin-bottom: 1rem; }
+    .footer-brand p { font-size: 0.88rem; line-height: 1.8; }
+    .footer-col h4 { color: var(--gold); font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 1rem; }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 0.6rem; }
+    .footer-col ul li a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.88rem; cursor: pointer; transition: color 0.2s; }
+    .footer-col ul li a:hover { color: var(--gold); }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    .footer-bottom p { font-size: 0.82rem; }
+    .footer-gold { color: var(--gold); font-weight: 600; }
+
+    /* ===== DIVIDER ===== */
+    .divider { height: 1px; background: var(--border); max-width: 1200px; margin: 0 auto; }
+
+    /* ===== RESPONSIVE BREAKPOINTS ===== */
+    @media (max-width: 992px) {
+      .nav-inner { padding: 0 1.5rem; }
+      .nav-links { 
+        display: none; flex-direction: column; position: absolute; 
+        top: 70px; left: 0; right: 0; background: var(--forest); 
+        padding: 1.5rem; gap: 0.5rem; border-top: 1px solid rgba(255,255,255,0.1);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      }
+      .nav-links.open { display: flex; animation: slideDown 0.3s ease-out; }
+      .nav-links a { padding: 0.75rem 1rem; border-radius: 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+      .hamburger { display: flex; }
+    }
+
+    @media (max-width: 768px) {
+      .section { padding: 3rem 1.5rem; }
+      .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .form-row { grid-template-columns: 1fr; }
+      .nav-logo-text { font-size: 0.95rem; }
+      .nav-logo-icon { width: 38px; height: 38px; }
+    }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .about-tabs { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 2rem; justify-content: center; }
+    .tab-button {
+      border: 2px solid var(--gold); background: rgba(255,255,255,0.08);
+      color: var(--forest); padding: 0.95rem 1.5rem; border-radius: 50px;
+      cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      font-weight: 700; letter-spacing: 1px; text-transform: uppercase; font-size: 0.85rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+    .tab-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(201,168,76,0.25);
+      border-color: var(--gold);
+    }
+    .tab-button.active {
+      background: linear-gradient(135deg, var(--gold), #e0b95c);
+      color: var(--forest);
+      box-shadow: 0 14px 40px rgba(201,168,76,0.35);
+      transform: scale(1.05);
+    }
+
+    .about-panel {
+      display: none; opacity: 0; transform: translateY(30px);
+      transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      animation: panelEntry 0.6s ease-out forwards;
+    }
+    @keyframes panelEntry { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+    .about-panel.active { display: block; opacity: 1; transform: translateY(0); }
+    .panel-description {
+      font-size: 1rem; color: var(--muted); margin-bottom: 2rem;
+      padding: 1.25rem; background: linear-gradient(135deg, var(--sand), rgba(255,255,255,0.5));
+      border-radius: 10px; border-left: 4px solid var(--gold);
+    }
+    .member-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.25rem;
+    }
+    .member-card {
+      border-radius: 16px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      background: var(--white); border: 1px solid var(--border);
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      animation: cardSlideIn 0.5s ease-out forwards;
+    }
+    @keyframes cardSlideIn { from { opacity: 0; transform: translateY(20px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
+    .member-card:nth-child(2) { animation-delay: 0.05s; }
+    .member-card:nth-child(3) { animation-delay: 0.1s; }
+    .member-card:nth-child(4) { animation-delay: 0.15s; }
+    .member-card:nth-child(5) { animation-delay: 0.2s; }
+    .member-card:nth-child(6) { animation-delay: 0.25s; }
+    .member-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.12);
+      border-color: var(--gold);
+    }
+    .member-toggle {
+      width: 100%; border: none;
+      background: linear-gradient(135deg, rgba(201,168,76,0.1), rgba(255,255,255,0.98));
+      padding: 1.15rem 1.4rem; text-align: left; font-size: 1rem; font-weight: 700;
+      color: var(--forest); cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+      transition: all 0.25s ease;
+      position: relative;
+    }
+    .member-toggle::after {
+      content: '▼'; display: inline-block; margin-left: 0.75rem; transition: transform 0.3s ease;
+      color: var(--gold); font-size: 0.75rem; font-weight: 900;
+    }
+    .member-toggle:hover {
+      background: linear-gradient(135deg, rgba(201,168,76,0.15), rgba(255,255,255,1));
+    }
+    .member-toggle:focus { outline: 2px solid var(--gold); outline-offset: -2px; }
+    .member-card.expanded .member-toggle { background: linear-gradient(135deg, var(--gold), #e0b95c); color: var(--forest); }
+    .member-card.expanded .member-toggle::after { transform: rotate(180deg); color: var(--forest); }
+    .member-details {
+      max-height: 0; overflow: hidden; transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), padding 0.35s ease;
+      background: linear-gradient(135deg, #f9f5ee, #ffffff);
+      border-top: 1px solid var(--border);
+    }
+    .member-details.open {
+      max-height: 280px; padding: 1.25rem 1.4rem;
+    }
+    .member-details p {
+      margin-bottom: 1rem; color: var(--charcoal); line-height: 1.7; font-size: 0.92rem;
+    }
+    .member-details strong { color: var(--forest); font-weight: 700; }
+    .member-details a { color: var(--gold); text-decoration: none; transition: color 0.2s; }
+    .member-details a:hover { color: var(--forest); text-decoration: underline; }
+
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" onclick="showPage('home')">
+      <img src="img/logo.png" alt="Mompou Association Logo" class="nav-logo-icon">
+      <div class="nav-logo-text">Mompou Association Inc<span>Building Community Together</span></div>
+    </a>
+    <div class="hamburger" onclick="toggleNav()" id="hamBtn">
+      <span></span><span></span><span></span>
+    </div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#" onclick="showPage('home')"   id="nav-home">Home</a></li>
+      <li><a href="#" onclick="showPage('news')"   id="nav-news">News Updates</a></li>
+      <li><a href="#" onclick="showPage('services')" id="nav-services">Services</a></li>
+      <li><a href="#" onclick="showPage('projects')" id="nav-projects">Projects</a></li>
+      <li><a href="#" onclick="showPage('about')" id="nav-about">About Us</a></li>
+      <li><a href="#" onclick="showPage('contact')" id="nav-contact">Contact Us</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ===================== HOME PAGE ===================== -->
+<div class="page active" id="page-home">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-decor"></div>
+    <div class="hero-content">
+      <div class="hero-tag">Welcome to Our Community</div>
+      <h1>Empowering Our <em>Community</em>, Building Our <em>Future</em></h1>
+      <p>Mompou Association Inc is a grassroots community organisation dedicated to uplifting every member through youth empowerment, economic support, and educational access.</p>
+      <div class="hero-btns">
+        <a class="btn-primary" onclick="showPage('services')">Our Services</a>
+        <a class="btn-outline" onclick="showPage('contact')">Get Involved</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats-bar">
+    <div class="stats-inner">
+      <div class="stat-item"><div class="stat-num">400+</div><div class="stat-lbl">Active Association Members</div></div>
+      <div class="stat-item"><div class="stat-num">2</div><div class="stat-lbl">Core Pillars</div></div>
+      <div class="stat-item"><div class="stat-num">5+</div><div class="stat-lbl">Businesses Supported</div></div>
+      <div class="stat-item"><div class="stat-num">20+</div><div class="stat-lbl">Students Assisted</div></div>
+    </div>
+  </div>
+
+  <!-- PILLARS -->
+  <div class="section">
+    <p class="section-label">Our Foundation</p>
+    <h2 class="section-title">Two Main Pillars of Our Mission</h2>
+    <p class="section-subtitle">Everything we do is built on these core commitments to our community's growth, resilience, and prosperity.</p>
+    <div class="pillars-grid">
+      <div class="pillar-card">
+        <div class="pillar-icon"><i class="fa-solid fa-people-group"></i></div>
+        <h3>Social Welfare</h3>
+        <p>We invest in the next generation through organised sports programmes, skills workshops, leadership training, and recreational activities that build character and teamwork among our youth.</p>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-icon"><i class="fa-solid fa-chart-line"></i></div>
+        <h3>Small_medium Enterprise (SME)</h3>
+        <p>We drive economic growth by funding small and medium-scale businesses within our community, creating sustainable livelihoods and reducing dependence on external support.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- NEWS PREVIEW -->
+  <div class="section">
+    <p class="section-label">Stay Informed</p>
+    <h2 class="section-title">Latest News & Updates</h2>
+    <p class="section-subtitle">See what's happening across our community programmes and initiatives.</p>
+    <div class="news-preview-grid">
+      <div class="news-card">
+        <div class="news-card-img nc-green"><img src="./img/tribesman2.jpg" alt="Rugby Club"></div>
+        <div class="news-card-body">
+          <div class="news-tag">Youth Empowerment</div>
+          <h4>Our Local Rugby League Club Recieved Jersy Donation from Credit Bank PNG</h4>
+          <p>The Mompou Association is pleased to acknowledge the generous jersey donation made by Credit Bank PNG to our local Rugby League Club. This support has played an important role in strengthening our sports development efforts and encouraging greater participation in community rugby league activities.
+
+The donation of new jersey sets has provided players with proper team uniforms, helping to build pride, unity, and a stronger sense of identity within the club. Wearing professional-quality jerseys also boosts player confidence and represents the club in a more organized and competitive manner during matches and tournaments.</p>
+          <div class="news-date" style="margin-bottom:0.75rem">May 10, 2025</div>
+          <a class="read-more" onclick="showPage('news')">Read More →</a>
+        </div>
+      </div>
+      <div class="news-card">
+        <div class="news-card-img nc-gold"><img src="./img/bigboys2.jpg" alt="Seed Money Support"></div>
+        <div class="news-card-body">
+          <div class="news-tag">Business Support</div>
+          <h4>Initial Seed Money Funding Support from Our Gold Members to support the upbringing of our Association</h4>
+          <p>The Initial Seed Money Funding Support from our Gold Members represents the foundational financial contribution that helped establish and strengthen the Mompou Association’s early development and ongoing operations. This support reflects the commitment and unity of our senior and key members who believe in the long-term vision of the association.
+
+The seed funding was used to support the initial setup of essential association activities, including administrative setup, small-scale community projects, youth programs, and early SME initiatives. It provided the necessary financial base to begin implementing development plans and engaging members in meaningful programs.</p>
+          <div class="news-date" style="margin-bottom:0.75rem">April 28, 2025</div>
+          <a class="read-more" onclick="showPage('news')">Read More →</a>
+        </div>
+      </div>
+      <div class="news-card">
+        <div class="news-card-img nc-clay"><img src="./img/cover.jpg" alt="Job Opportunities"></div>
+        <div class="news-card-body">
+          <div class="news-tag">Education</div>
+          <h4>Education Support & Future Scholars Development Program.</h4>
+          <p>The Education Support & Future Scholars Development Program is a core initiative of the Mompou Association dedicated to empowering the next generation through access to quality education and academic advancement opportunities.
+
+The main aim of this program is to support students at all levels of education, including tertiary studies, secondary schooling, and postgraduate (master’s degree) pathways. By providing educational assistance and encouragement, the association seeks to reduce financial barriers that often prevent students from reaching their full academic potential.
+
+This initiative focuses on nurturing future leaders, professionals, and skilled individuals who can contribute positively to the development of their families and communities..</p>
+          <div class="news-date" style="margin-bottom:0.75rem">April 15, 2025</div>
+          <a class="read-more" onclick="showPage('news')">Read More →</a>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center; margin-top:2.5rem">
+      <a class="btn-primary" onclick="showPage('news')">View All News</a>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div style="background: linear-gradient(135deg, #c9a84c 0%, #a07820 45%, #075985 100%); padding: 5rem 2rem; text-align: center;">
+    <p style="font-size:0.7rem;letter-spacing:4px;text-transform:uppercase;color:var(--forest);font-weight:700;margin-bottom:0.75rem">Join Us</p>
+    <h2 style="font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4vw,3rem);color:var(--white);margin-bottom:1rem">Become Part of Our Community</h2>
+    <p style="color:rgba(26,58,42,0.75);max-width:500px;margin:0 auto 2rem;line-height:1.8">Whether you want to volunteer, donate, or simply stay connected — there's a place for you in the Mompou family.</p>
+    <a class="btn-primary" style="background:var(--forest);color:var(--white)" onclick="showPage('contact')">Contact Us Today</a>
+  </div>
+
+</div>
+
+<!-- ===================== NEWS PAGE ===================== -->
+<div class="page" id="page-news">
+  <div class="page-hero">
+    <div class="page-hero-content">
+      <span>Community Voice</span>
+      <h2>News & Updates</h2>
+      <p>Stay up to date with all the latest activities, events, and announcements from Mompou Association Inc.</p>
+    </div>
+  </div>
+  <div class="section">
+    <p class="section-label">Community Updates</p>
+    <h2 class="section-title">Latest Announcements</h2>
+    <p class="section-subtitle">Explore our progress across our social development and economic empowerment initiatives.</p>
+
+    <!-- SOCIAL WELFARE NEWS DIVISION -->
+    <div class="news-category-header">
+      <h3>Social Welfare News</h3>
+    </div>
+    <div class="news-full-grid">
+      <div class="news-full-card">
+        <div class="news-full-img nc-green"><img src="./img/tribesman1.jpg" alt="Football Tournament"></div>
+        <div class="news-full-body">
+          <div class="meta"><span class="badge">Youth</span><span style="font-size:0.8rem;color:var(--muted)">May 10, 2025</span></div>
+          <h3>Tribesman RLC with their New Jersy Sets Donated by Credit Bank of PNG</h3>
+          <p>The Mompou Association is proud to acknowledge the generous donation of new rugby league jersey sets by Credit Bank PNG to the Tribesman Rugby League Club (RLC). This support was made possible through the coordination and advocacy of our association, which continues to work with partners to create opportunities that benefit our local community.
+
+The donation will provide the team with quality uniforms, helping players represent their club with pride while promoting unity, discipline, and teamwork. It also eases the financial burden on players and their families, allowing the team to focus on training and competition.
+
+This initiative reflects our association's commitment to youth empowerment through sports and recreation. We extend our sincere appreciation to Credit Bank PNG for investing in our local athletes and supporting the positive development of our community. We look forward to building more partnerships that create lasting benefits for our people.</p>
+        </div>
+      </div>
+      <div class="news-full-card">
+        <div class="news-full-img nc-clay"><img src="./img/grandstand2.jpg" alt="School Fees Assistance"></div>
+        <div class="news-full-body">
+          <div class="meta"><span class="badge">Community</span><span style="font-size:0.8rem;color:var(--muted)">April 15, 2025</span></div>
+          <h3>Newly Built Grandstand for our Association</h3>
+          <p>The completion of our newly built grandstand marks an important milestone for the Mompou Association and the wider community. This new facility provides a safe and comfortable space for members, supporters, and visitors to gather during sporting events, community meetings, and special celebrations.
+
+The grandstand represents our association's commitment to improving community infrastructure and creating a better environment for youth development, sports, and social activities. It will serve as a lasting asset that brings people together, strengthens community spirit, and supports future events.
+
+We sincerely thank everyone who contributed their time, resources, and support to make this project a reality. This achievement reflects what can be accomplished through teamwork, dedication, and a shared vision for the future of our community..</p>
+        </div>
+      </div>
+
+      <div class="news-full-card">
+        <div class="news-full-img" style="background: linear-gradient(135deg,#103050,#2a6cbd)"><img src="./img/brideprice1.jpg" alt="Leadership Workshop"></div>
+        <div class="news-full-body">
+          <div class="meta"><span class="badge">Community</span><span style="font-size:0.8rem;color:var(--muted)">March 22, 2025</span></div>
+          <h3>Bridesprice Ceremony Held at our resource center</h3>
+          <p>As part of our commitment to preserving and promoting our cultural heritage, the Mompou Association was honored to host a traditional bride price ceremony at our Resource Center. This important cultural event brought together families, relatives, elders, and community members to celebrate and uphold one of our most respected customs.
+
+By providing the Resource Center as a venue, the association continues to support cultural obligations and strengthen the values of respect, unity, and family relationships. The ceremony also gave younger generations an opportunity to witness and appreciate the significance of our traditional practices, ensuring that our customs and traditions are preserved for the future.
+
+The Mompou Association remains dedicated to supporting cultural activities that strengthen community identity, promote social harmony, and preserve our rich heritage for generations to come..</p>
+        </div>
+      </div>
+
+      <div class="news-full-card">
+        <div class="news-full-img" style="background: linear-gradient(135deg,#0a3030,#0d9488)"><img src="./img/about.jpg" alt="Community Garden"></div>
+        <div class="news-full-body">
+          <div class="meta"><span class="badge">Development</span><span style="font-size:0.8rem;color:var(--muted)">February 14, 2025</span></div>
+          <h3>Funeral Service of one of our founding Fathers </h3>
+          <p>As part of our commitment to social welfare and community support, the Mompou Association came together to honor the life and legacy of one of our founding fathers during his funeral service. The association stood alongside his family, relatives, and community members to pay our final respects and recognize his invaluable contributions to the establishment and growth of our association.
+
+Our participation reflected the values of compassion, unity, and mutual support that define our community. During times of grief, the association remains committed to supporting members and their families, ensuring that no one faces such difficult moments alone.
+
+We pay tribute to our founding father for his vision, leadership, and dedication, which helped lay the foundation for the Mompou Association. His legacy will continue to inspire future generations as we carry forward the values and purpose he helped establish. May he rest in eternal peace.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SME NEWS DIVISION -->
+    <div class="news-category-header">
+      <h3>SME News (Small-Medium Enterprise)</h3>
+    </div>
+    <div class="news-full-grid">
+      <div class="news-full-card">
+        <div class="news-full-img nc-gold"><img src="./img/work2.jpg" alt="SME Funding"></div>
+        <div class="news-full-body">
+          <div class="meta"><span class="badge">Business</span><span style="font-size:0.8rem;color:var(--muted)">April 28, 2025</span></div>
+          <h3>Islands Petroluem sub-contact Work given to our Welding & Fabrication team</h3>
+          <p>As part of our commitment to creating economic opportunities for our members, the Mompou Association successfully facilitated a subcontract opportunity from Islands Petroleum for our Welding & Fabrication Team. This achievement reflects the association's ongoing efforts to connect skilled members with meaningful employment and business opportunities.
+
+The subcontract provided valuable hands-on work, allowing our team to demonstrate their technical skills, professionalism, and commitment to delivering quality services. It also created income-generating opportunities for local tradespeople while helping them gain experience and build their reputation within the industry.</p>
+        </div>
+      </div>
+
+      <div class="news-full-card">
+        <div class="news-full-img" style="background: linear-gradient(135deg,#2a1050,#7c3aed)"><img src="./img/grandstand1.jpg" alt="AGM 2025"></div>
+        <div class="news-full-body">
+          <div class="meta"><span class="badge">Business</span><span style="font-size:0.8rem;color:var(--muted)">March 5, 2025</span></div>
+          <h3>Building Construction of our New resource Center and Office</h3>
+          <p>The Mompou Association is pleased to highlight the ongoing building construction of our new Resource Center and Office, a key Small and Medium Enterprise (SME) development project aimed at strengthening our organizational capacity and service delivery.
+
+This construction project represents an important step toward creating a dedicated space where administrative work, community programs, training sessions, and SME support activities can be effectively coordinated. Once completed, the facility will improve how the association manages its operations and delivers services to members and the wider community.
+
+Under the SME development focus, this project also provides opportunities for local workers, including builders, carpenters, electricians, and suppliers, to participate in the construction process. This helps stimulate local economic activity, create short-term employment, and build practical skills within the community.
+
+The new Resource Center and Office will serve as a foundation for future growth, enabling the association to expand its programs in business support, youth empowerment, education assistance, and community development. We sincerely acknowledge all partners and contributors who are helping bring this important project to life.</p>
+        </div>
+
+        
+      </div>
+      <div class="news-full-card">
+        <div class="news-full-img" style="background: linear-gradient(135deg,#2a1050,#7c3aed)"><img src="./img/vest.jpg" alt="AGM 2025"></div>
+        <div class="news-full-body">
+          <div class="meta"><span class="badge">Business</span><span style="font-size:0.8rem;color:var(--muted)">March 5, 2025</span></div>
+          <h3>Foundation setting of our Power Poles</h3>
+          <p>The Mompou Association is pleased to report the foundation setting of our power poles as part of an important Small and Medium Enterprise (SME) infrastructure development initiative. This project is a key step toward improving essential services and supporting future development activities within our association’s operational area.
+
+The installation of power pole foundations is critical in establishing a reliable electricity supply system that will support our Resource Center, office facilities, workshops, and future SME activities. Access to stable power will enable better delivery of services, improve productivity, and create opportunities for small businesses to operate more effectively.
+
+This project has also provided opportunities for local workers and technical teams to be involved in the groundwork, reinforcing our commitment to creating employment and building practical skills within the community. It reflects the association’s focus on combining infrastructure development with economic empowerment..</p>
+        </div>
+
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== SERVICES PAGE ===================== -->
+<div class="page" id="page-services">
+  <div class="page-hero">
+    <div class="page-hero-content">
+      <span>What We Offer</span>
+      <h2>Our Services</h2>
+      <p>Mompou Association Inc delivers practical, impactful services rooted in our three core pillars — empowering youth, supporting businesses, and enabling education.</p>
+    </div>
+  </div>
+  <div class="section">
+    <p class="section-label">Core Programmes</p>
+    <h2 class="section-title">How We Serve Our Community</h2>
+    <p class="section-subtitle">Every service we offer is designed to create lasting, positive change in the lives of our community members.</p>
+    <div class="services-grid">
+
+      <div class="service-card">
+        <div class="service-num">01</div>
+        <div class="icon"><i class="fa-solid fa-futbol"></i></div>
+        <h3>Youth Sports Programmes</h3>
+        <p>We organise and fund competitive and recreational sports activities for young people including football, athletics, and other team sports. Our sports initiatives build character, discipline, and a sense of community pride among participants.</p>
+        <div class="service-tags">
+          <span class="stag">Football</span>
+          <span class="stag">Athletics</span>
+          <span class="stag">Team Sports</span>
+          <span class="stag">Tournaments</span>
+        </div>
+      </div>
+
+      <div class="service-card">
+        <div class="service-num">02</div>
+        <div class="icon"><i class="fa-solid fa-bullseye"></i></div>
+        <h3>Youth Activities & Skills Development</h3>
+        <p>Beyond sports, we provide workshops, cultural events, leadership programmes, and life skills training that prepare young people for adult life and responsible citizenship within the community.</p>
+        <div class="service-tags">
+          <span class="stag">Workshops</span>
+          <span class="stag">Leadership</span>
+          <span class="stag">Life Skills</span>
+          <span class="stag">Cultural Events</span>
+        </div>
+      </div>
+
+      <div class="service-card">
+        <div class="service-num">03</div>
+        <div class="icon"><i class="fa-solid fa-briefcase"></i></div>
+        <h3>SME Funding & Business Support</h3>
+        <p>We provide financial grants and low-interest assistance to small and medium-scale entrepreneurs within our community. Our goal is to build a self-sustaining local economy that keeps wealth circulating within our people.</p>
+        <div class="service-tags">
+          <span class="stag">Grants</span>
+          <span class="stag">Mentorship</span>
+          <span class="stag">Retail</span>
+          <span class="stag">Agriculture</span>
+        </div>
+      </div>
+
+      <div class="service-card">
+        <div class="service-num">04</div>
+        <div class="icon"><i class="fa-solid fa-users"></i></div>
+        <h3>Community Engagement & Events</h3>
+        <p>We host regular community meetings, annual general assemblies, cultural celebrations, and outreach programmes that unite members, foster belonging, and strengthen social ties across generations.</p>
+        <div class="service-tags">
+          <span class="stag">Meetings</span>
+          <span class="stag">Celebrations</span>
+          <span class="stag">Outreach</span>
+          <span class="stag">Dialogue</span>
+        </div>
+      </div>
+
+      <div class="service-card">
+        <div class="service-num">05</div>
+        <div class="icon"><i class="fa-solid fa-graduation-cap"></i></div>
+        <h3>School Fees Assistance</h3>
+        <p>We directly pay or subsidise school fees for qualifying students from primary through to tertiary education. Applications are reviewed by our education committee, with priority given to students demonstrating both need and academic effort.</p>
+        <div class="service-tags">
+          <span class="stag">Primary</span>
+          <span class="stag">Secondary</span>
+          <span class="stag">University</span>
+          <span class="stag">Technical</span>
+        </div>
+      </div>
+
+      <div class="service-card">
+        <div class="service-num">06</div>
+        <div class="icon"><i class="fa-solid fa-book-open"></i></div>
+        <h3>Scholarships & Educational Resources Assistants</h3>
+        <p>Beyond fees, we provide stationery, uniforms, and supplementary financial support to ensure students have everything they need to focus on their studies without distraction from financial hardship.</p>
+        <div class="service-tags">
+          <span class="stag">Scholarships</span>
+          <span class="stag">Stationery</span>
+          <span class="stag">Uniforms</span>
+          <span class="stag">Bursaries</span>
+        </div>
+      </div>
+
+       <div class="service-card">
+        <div class="service-num">07</div>
+        <div class="icon"><i class="fa-solid fa-landmark"></i></div>
+        <h3>Cultural Obligations</h3>
+        <p>Beyond sports, we provide workshops, cultural events, leadership programmes, and life skills training that prepare young people for adult life and responsible citizenship within the community.</p>
+        <div class="service-tags">
+          <span class="stag">Workshops</span>
+          <span class="stag">Leadership</span>
+          <span class="stag">Life Skills</span>
+          <span class="stag">Cultural Events</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div style="background:var(--sand);padding:4rem 2rem;text-align:center;margin-top:2rem">
+    <h3 style="font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--forest);margin-bottom:1rem">Need to Apply for Our Services?</h3>
+    <p style="color:var(--muted);margin-bottom:1.5rem;max-width:480px;margin-left:auto;margin-right:auto;line-height:1.7">Reach out to us via the contact page or attend one of our community meetings to learn how to apply.</p>
+    <a class="btn-primary" onclick="showPage('contact')">Contact Us</a>
+  </div>
+</div>
+
+<!-- ===================== PROJECTS PAGE ===================== -->
+<div class="page" id="page-projects">
+  <div class="page-hero">
+    <div class="page-hero-content">
+      <span>Our Work</span>
+      <h2>Projects</h2>
+      <p>From sports grounds to scholarship funds and business hubs — here are the active and upcoming projects driving real change in our community.</p>
+    </div>
+  </div>
+  <div class="section">
+    <p class="section-label">Our Work</p>
+    <h2 class="section-title">Projects</h2>
+    <!-- Replace img/project-1.jpg ... img/project-6.jpg with your own image paths -->
+    <div class="projects-grid">
+
+      <div class="project-card">
+        <div class="project-img p-green">
+          <a href="./img/.jpg" target="_blank" rel="noreferrer noopener">
+            <img src="./img/grandstand1.jpg" alt="Grandstand Project" loading="lazy">
+          </a>
+        </div>
+        <div class="project-body">
+          <span class="status status-active">Active</span>
+          <h3> Association Grandstand & Office Project</h3>
+          
+          <p>The Mompou Association Grandstand & Office Project is one of our key community development initiatives aimed at strengthening both sporting infrastructure and administrative capacity within our association. This integrated project combines the construction of a modern grandstand and a functional office space to better serve our members and the wider community.
+
+The grandstand component provides a safe, organized, and comfortable viewing area for sports events, community gatherings, and cultural activities. It enhances the experience of players and supporters while promoting greater participation in local rugby league and other recreational programs.
+
+The office component serves as the operational hub of the association, where planning, coordination, and delivery of programs such as SME support, youth empowerment, education assistance, and social welfare services are managed. This ensures more efficient service delivery and improved communication within the association.</p>
+          <div class="progress-wrap">
+            <div class="progress-label"><span>Progress</span><span>80%</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:80%"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-img p-gold">
+          <a href="img/work2.jpg" target="_blank" rel="noreferrer noopener">
+            <img src="./img/work2.jpg" alt="Islands Petroleum Fabrication Project" loading="lazy">
+          </a>
+        </div>
+        <div class="project-body">
+          <span class="status status-active">Completed</span>
+          <h3>Islands Petroleum Fabrication Project</h3>
+          <p>The Islands Petroleum Fabrication Project is a significant subcontract work completed by the Mompou Association’s Welding and Fabrication Team in partnership with Islands Petroleum. This project reflects the association’s growing capacity to deliver professional industrial services while creating real employment opportunities for local skilled workers.
+
+The main objective of the project was to carry out welding and fabrication works to support Islands Petroleum’s operational requirements. Our team was responsible for producing quality steel structures and fabrication components, ensuring that all work met required safety and industry standards.
+
+This project provided valuable hands-on experience for our members, allowing them to apply their technical skills in a real industrial environment. It also helped improve workmanship standards, teamwork, and workplace discipline, which are essential for future larger-scale contracts.</p>
+          <div class="progress-wrap">
+            <div class="progress-label"><span>Completed</span><span>100%</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-img p-clay">
+          <a href="img/road.jpg" target="_blank" rel="noreferrer noopener">
+            <img src="img/road.jpg" alt="2025 School Fees Assistance Initiative" loading="lazy">
+          </a>
+        </div>
+        <div class="project-body">
+          <span class="status status-active">Active</span>
+          <h3>Road Gravelling Project</h3>
+          <p>The Mompou Association’s Road Gravelling Project is a key community infrastructure initiative aimed at improving access, connectivity, and transportation within our local area. This project involves the upgrading of existing dirt roads by spreading and compacting gravel to create a more durable and reliable road surface.
+
+The improvement of these roads plays an important role in supporting everyday community activities, including access to schools, health services, markets, and business operations. It also helps reduce transport difficulties during wet weather, making travel safer and more efficient for both pedestrians and vehicles.
+
+In addition to improving mobility, the project provides opportunities for local employment through the engagement of small contractors, machine operators, and laborers. This supports the association’s broader SME development goals by stimulating local economic activity and skills development.</p>
+          <div class="progress-wrap">
+            <div class="progress-label"><span>Progress</span><span>35%</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:35%"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-img p-blue">
+          <a href="img/bigboys.jpg" target="_blank" rel="noreferrer noopener">
+            <img src="img/bigboys.jpg" alt="Community Resource Centre Construction" loading="lazy">
+          </a>
+        </div>
+        <div class="project-body">
+          <span class="status status-planning">Planning</span>
+          <h3>Cultural Obligations Initiative</h3>
+          <p>The Cultural Obligations Initiative is an important welfare and support program under the Mompou Association, designed to assist registered members in fulfilling key cultural and traditional responsibilities within the community. This initiative recognizes the importance of cultural practices such as bride price ceremonies, funeral contributions, and other customary obligations that are part of our social structure.
+
+The main aim of this program is to provide structured support to members during significant life events, ensuring that financial pressure does not prevent them from meeting their cultural responsibilities. Through this initiative, the association helps contribute to bride price ceremonies, funeral expenses, and other agreed cultural obligations in a fair and organized manner.
+
+This program is strictly available to registered members of the association, promoting accountability, unity, and shared responsibility among members. It also strengthens the bond between families and the association by ensuring that members can rely on collective support during important and often challenging times..</p>
+          <div class="progress-wrap">
+            <div class="progress-label"><span>Progress</span><span>20%</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:20%"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-img p-purple">
+          <a href="img/tribesman2.jpg" target="_blank" rel="noreferrer noopener">
+            <img src="img/tribesman2.jpg" alt="Youth Leadership Academy" loading="lazy">
+          </a>
+        </div>
+        <div class="project-body">
+          <span class="status status-planning">Active</span>
+          <h3>Youth sports Program</h3>
+          <p>The Mompou Association’s Youth Sports Program is a community-focused initiative designed to actively engage young people in organized sporting activities, with the aim of promoting healthy lifestyles, discipline, and positive personal development.
+
+A key objective of this program is to keep youth away from harmful influences such as drugs and alcohol by providing them with constructive alternatives that build confidence, teamwork, and leadership skills. Through regular training sessions, competitions, and community events, young people are encouraged to focus their energy on sport and personal growth.
+
+The program also aims to identify and nurture sporting talent, giving youth the opportunity to develop their skills and potentially progress into higher levels of competition in their chosen sporting fields. This creates pathways for future success, both on and off the field.
+
+Overall, the Youth Sports Program reflects the association’s commitment to youth empowerment, social well-being, and community development. By investing in our young people today, we are building a stronger, healthier, and more productive future for our community.</p>
+          <div class="progress-wrap">
+            <div class="progress-label"><span>Progress</span><span>30%</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:30%"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-img p-teal">
+          <a href="img/road1.jpg" target="_blank" rel="noreferrer noopener">
+            <img src="img/road1.jpg" alt="Community Garden Pilot Programme" loading="lazy">
+          </a>
+        </div>
+        <div class="project-body">
+          <span class="status status-complete">Planning</span>
+          <h3>Community SME Start-up project Initiative</h3>
+          <p>The Community SME Start-up Project Initiative is a key development program of the Mompou Association aimed at empowering local individuals and families to establish and grow small and medium enterprises within the community. The main goal of this initiative is to create sustainable income opportunities and reduce unemployment by supporting grassroots business development.
+
+Through this project, the association seeks to provide practical support such as basic business training, mentorship, access to small-scale funding opportunities, and guidance on business planning and management. The focus is on helping individuals turn their skills, ideas, and resources into viable income-generating activities.
+
+This initiative also aims to strengthen the local economy by encouraging entrepreneurship in areas such as trade, agriculture, services, and small-scale production. By supporting start-up businesses, the project helps build financial independence and reduces reliance on limited formal employment opportunities.</p>
+          <div class="progress-wrap">
+            <div class="progress-label"><span>Progress</span><span>5%</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:5%"></div></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ===================== ABOUT PAGE ===================== -->
+<div class="page" id="page-about">
+  <div class="page-hero">
+    <div class="page-hero-content">
+      <span>Association Structure</span>
+      <h2>About Our Members & Committees</h2>
+      <p>Get to know the Gold Members, Executive Committee, and Zone Representatives leading the Mompou Association.</p>
+    </div>
+  </div>
+  <div class="section">
+    <p class="section-label">Organization</p>
+    <h2 class="section-title">Membership Structure</h2>
+    <p class="section-subtitle">Click a group below to reveal all member names and details for each role.</p>
+
+    <div class="about-tabs">
+      <button class="tab-button active" data-panel="gold-members">Gold Members</button>
+      <button class="tab-button" data-panel="executives">Executive Committee</button>
+      <button class="tab-button" data-panel="zones">Zone Committees</button>
+    </div>
+
+    <div class="about-panel active" id="gold-members">
+      <p class="panel-description">Our Gold Members are the foundation of the association. Expand a name to view member details.</p>
+      <div class="member-grid">
+        <div class="member-card">
+          <button class="member-toggle" data-target="gold-1">Emmanuel Pok</button>
+          <div class="member-details" id="gold-1">
+            <p><strong>Role:</strong> Gold Member</p>
+            <p><strong>Status:</strong> Active</p>
+            <p><strong>Contact:</strong> Available on request via <a href="mailto:mompouassociation1@gmail.com">mompouassociation1@gmail.com</a></p>
+          </div>
+        </div>
+        <div class="member-card">
+          <button class="member-toggle" data-target="gold-2">Steven Saplao</button>
+          <div class="member-details" id="gold-2">
+            <p><strong>Role:</strong> Gold Member</p>
+            <p><strong>Status:</strong> Active</p>
+            <p><strong>Contact:</strong> Available on request via association email.</p>
+          </div>
+        </div>
+        <div class="member-card">
+          <button class="member-toggle" data-target="gold-3">Andrew Diu Yamai</button>
+          <div class="member-details" id="gold-3">
+            <p><strong>Role:</strong> Gold Member</p>
+            <p><strong>Status:</strong> Active</p>
+            <p><strong>Contact:</strong> Available on request via association email.</p>
+          </div>
+        </div>
+        <div class="member-card">
+          <button class="member-toggle" data-target="gold-4">Francis Kunuma</button>
+          <div class="member-details" id="gold-4">
+            <p><strong>Role:</strong> Gold Member</p>
+            <p><strong>Status:</strong> Active</p>
+            <p><strong>Contact:</strong> Available on request via association email.</p>
+          </div>
+        </div>
+        <div class="member-card">
+          <button class="member-toggle" data-target="gold-5">Samson Amos</button>
+          <div class="member-details" id="gold-5">
+            <p><strong>Role:</strong> Gold Member</p>
+            <p><strong>Status:</strong> Active</p>
+            <p><strong>Contact:</strong> Available on request via association email.</p>
+          </div>
+        </div>
+        <div class="member-card">
+          <button class="member-toggle" data-target="gold-6">Tony Sipa</button>
+          <div class="member-details" id="gold-6">
+            <p><strong>Role:</strong> Gold Member</p>
+            <p><strong>Status:</strong> Active</p>
+            <p><strong>Contact:</strong> Available on request via association email.</p>
+          </div>
+        </div>
+        <div class="member-card">
+          <button class="member-toggle" data-target="gold-7">Tony Siap</button>
+          <div class="member-details" id="gold-7">
+            <p><strong>Role:</strong> Gold Member</p>
+            <p><strong>Status:</strong> Active</p>
+            <p><strong>Contact:</strong> Available on request via association email.</p>
+          </div>
+        </div>
+        <div class="member-card">
+          <button class="member-toggle" data-target="gold-8">Patrick Kunuma</button>
+          <div class="member-details" id="gold-8">
+            <p><strong>Role:</strong> Gold Member</p>
+            <p><strong>Status:</strong> Active</p>
+            <p><strong>Contact:</strong> Available on request via association email.</p>
+          </div>
+        </div>
+        <div class="member-card">
+          <button class="member-toggle" data-target="gold-9">Jerry Thomas</button>
+          <div class="member-details" id="gold-9">
+            <p><strong>Role:</strong> Gold Member</p>
+            <p><strong>Status:</strong> Active</p>
+            <p><strong>Contact:</strong> Available on request via association email.</p>
+          </div>
+        </div>
+        <div class="member-card">
+          <button class="member-toggle" data-target="gold-10">Andrew Pakari</button>
+          <div class="member-details" id="gold-10">
+            <p><strong>Role:</strong> Gold Member</p>
+            <p><strong>Status:</strong> Active</p>
+            <p><strong>Contact:</strong> Available on request via association email.</p>
+          </div>
+        </div>
+        <div class="member-card">
+          <button class="member-toggle" data-target="gold-11">Pauline James</button>
+          <div class="member-details" id="gold-11">
+            <p><strong>Role:</strong> Gold Member</p>
+            <p><strong>Status:</strong> Active</p>
+            <p><strong>Contact:</strong> Available on request via association email.</p>
+          </div>
+        </div>
+        <div class="member-card">
+          <button class="member-toggle" data-target="gold-12">Emmanuel Ambi</button>
+          <div class="member-details" id="gold-12">
+            <p><strong>Role:</strong> Gold Member</p>
+            <p><strong>Status:</strong> Active</p>
+            <p><strong>Contact:</strong> Available on request via association email.</p>
+          </div>
+        </div>
+        <div class="member-card">
+          <button class="member-toggle" data-target="gold-13">Alfie James Mange</button>
+          <div class="member-details" id="gold-13">
+            <p><strong>Role:</strong> Gold Member</p>
+            <p><strong>Status:</strong> Active</p>
+            <p><strong>Contact:</strong> Available on request via association email.</p>
+          </div>
+        </div>
+        <div class="member-card">
+          <button class="member-toggle" data-target="gold-14">Joseph Yandawai</button>
+          <div class="member-details" id="gold-14">
+            <p><strong>Role:</strong> Gold Member</p>
+            <p><strong>Status:</strong> Active</p>
+            <p><strong>Contact:</strong> Available on request via association email.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="about-panel" id="executives">
+      <p class="panel-description">The Executive Committee leads the association. Expand a name to see the role and contact details.</p>
+      <div class="member-grid">
+        <div class="member-card">
+          <button class="member-toggle" data-target="exec-1">John Thomas</button>
+          <div class="member-details" id="exec-1">
+            <p><strong>Role:</strong> Chairman</p>
+            <p><strong>Email:</strong> <a href="mailto:mompouassociation1@gmail.com">mompouassociation1@gmail.com</a></p>
+            <p><strong>Phone:</strong> +675 74472900</p>
+          </div>
+        </div>
+        <div class="member-card">
+          <button class="member-toggle" data-target="exec-2">Paul Apa William</button>
+          <div class="member-details" id="exec-2">
+            <p><strong>Role:</strong> Deputy Chairman</p>
+            <p><strong>Email:</strong> <a href="mailto:mompouassociation1@gmail.com">mompouassociation1@gmail.com</a></p>
+            <p><strong>Phone:</strong> +675 70911729</p>
+          </div>
+        </div>
+        <div class="member-card">
+          <button class="member-toggle" data-target="exec-3">Lucy Buckley</button>
+          <div class="member-details" id="exec-3">
+            <p><strong>Role:</strong> Secretary</p>
+            <p><strong>Email:</strong> <a href="mailto:mompouassociation1@gmail.com">mompouassociation1@gmail.com</a></p>
+            <p><strong>Phone:</strong> +675 79022271</p>
+          </div>
+        </div>
+        <div class="member-card">
+          <button class="member-toggle" data-target="exec-4">Nelson Amos</button>
+          <div class="member-details" id="exec-4">
+            <p><strong>Role:</strong> Treasurer</p>
+            <p><strong>Email:</strong> <a href="mailto:mompouassociation1@gmail.com">mompouassociation1@gmail.com</a></p>
+            <p><strong>Phone:</strong> +675 79892543</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="about-panel" id="zones">
+      <p class="panel-description">Zone representatives ensure that each area of our community has a strong voice in the association.</p>
+      <div class="member-grid">
+        <div class="member-card">
+          <button class="member-toggle" data-target="zone-1">Zone 1</button>
+          <div class="member-details" id="zone-1">
+            <p><strong>Representatives:</strong> Jerry Yere &amp; Daniel Kole</p>
+            <p><strong>Region:</strong> Zone 1</p>
+            <p><strong>Contact:</strong> Available on request via association office.</p>
+          </div>
+        </div>
+        <div class="member-card">
+          <button class="member-toggle" data-target="zone-2">Zone 2</button>
+          <div class="member-details" id="zone-2">
+            <p><strong>Representatives:</strong> Naomi Tapalo &amp; Loy Bire</p>
+            <p><strong>Region:</strong> Zone 2</p>
+            <p><strong>Contact:</strong> Available on request via association office.</p>
+          </div>
+        </div>
+        <div class="member-card">
+          <button class="member-toggle" data-target="zone-3">Zone 3</button>
+          <div class="member-details" id="zone-3">
+            <p><strong>Representatives:</strong> Joseph Kasu &amp; Simon Yako</p>
+            <p><strong>Region:</strong> Zone 3</p>
+            <p><strong>Contact:</strong> Available on request via association office.</p>
+          </div>
+        </div>
+        <div class="member-card">
+          <button class="member-toggle" data-target="zone-4">Zone 4</button>
+          <div class="member-details" id="zone-4">
+            <p><strong>Representatives:</strong> Moses Fifi &amp; Marshal Lolly</p>
+            <p><strong>Region:</strong> Zone 4</p>
+            <p><strong>Contact:</strong> Available on request via association office.</p>
+          </div>
+        </div>
+        <div class="member-card">
+          <button class="member-toggle" data-target="zone-5">Zone 5</button>
+          <div class="member-details" id="zone-5">
+            <p><strong>Representatives:</strong> Robert Sipa &amp; Julian Urulu</p>
+            <p><strong>Region:</strong> Zone 5</p>
+            <p><strong>Contact:</strong> Available on request via association office.</p>
+          </div>
+        </div>
+        <div class="member-card">
+          <button class="member-toggle" data-target="zone-6">Zone 6</button>
+          <div class="member-details" id="zone-6">
+            <p><strong>Representatives:</strong> John Onii &amp; Jerry Tineme</p>
+            <p><strong>Region:</strong> Zone 6</p>
+            <p><strong>Contact:</strong> Available on request via association office.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:2rem; padding:1.75rem; background: var(--sand); border-radius: 10px; border: 1px solid var(--border);">
+      <h3 style="font-family:'Playfair Display', serif; color: var(--forest); margin-bottom: 0.5rem;">Join the Directory</h3>
+      <p style="font-size: 0.95rem; color: var(--muted); line-height: 1.6;">Gold members, executives, and zone representatives work together to support our community. Full member information is available from the association office upon request for verified members.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== CONTACT PAGE ===================== -->
+<div class="page" id="page-contact">
+  <div class="page-hero">
+    <div class="page-hero-content">
+      <span>Reach Out</span>
+      <h2>Contact Us</h2>
+      <p>We would love to hear from you — whether you want to get involved, apply for support, or simply learn more about what we do.</p>
+    </div>
+  </div>
+  <div class="section">
+    <div class="contact-grid">
+      <div class="contact-info">
+        <h3>Get In Touch With Mompou Association Inc</h3>
+        <p>We are always open to new members, volunteers, partners, and anyone who wants to make a positive difference. Reach us through any of the channels below or fill out the form and we will get back to you promptly.</p>
+
+        <div class="contact-detail">
+          <div class="contact-detail-icon"><i class="fa-solid fa-location-dot"></i></div>
+          <div class="contact-detail-text">
+            <strong>Address</strong>
+            <span>Kagamuga Airport Area , Mt Hagen WHP</span>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-detail-icon"><i class="fa-solid fa-envelope"></i></div>
+          <div class="contact-detail-text">
+            <strong>Email</strong>
+            <span>Mompouassociationinc@gmail.com</span>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-detail-icon"><i class="fa-solid fa-phone"></i></div>
+          <div class="contact-detail-text">
+            <strong>Phone</strong>
+            <span>+675 82726811</span>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-detail-icon"><i class="fa-solid fa-clock"></i></div>
+          <div class="contact-detail-text">
+            <strong>Office Hours</strong>
+            <span>Monday – Friday: 8:00 AM – 5:00 PM</span>
+          </div>
+        </div>
+
+        <!-- Partnership & Investor Call to Action -->
+        <div style="margin-top: 2.5rem; padding: 2rem; background: var(--sand); border-radius: 10px; border: 2px dashed var(--gold);">
+          <h4 style="font-family: 'Playfair Display', serif; color: var(--forest); margin-bottom: 0.75rem; font-size: 1.2rem;">Investor & Funding Support</h4>
+          <p style="font-size: 0.92rem; color: var(--muted); margin-bottom: 1.5rem; line-height: 1.6;">For more information or interested investors for funding support, please reach out to us via our dedicated partnership intake form.</p>
+          <a href="https://form.typeform.com/to/FDLWIdX3" target="_blank" class="btn-primary" style="display: inline-block; font-size: 0.85rem; padding: 0.7rem 1.5rem; text-decoration: none;">Access Partnership Form</a>
+        </div>
+
+        <!-- Social Media Links -->
+        <div style="margin-top: 2.5rem;">
+          <h4 style="font-family: 'Playfair Display', serif; color: var(--forest); margin-bottom: 1.5rem; font-size: 1.4rem;">Connect With Us</h4>
+          <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+            <a href="#" target="_blank" class="contact-social-link"><i class="fab fa-facebook-f"></i> Facebook</a>
+            <a href="#" target="_blank" class="contact-social-link"><i class="fab fa-instagram"></i> Instagram</a>
+            <a href="#" target="_blank" class="contact-social-link"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
+          </div>
+        </div>
+      </div>
+
+      <form class="contact-form" id="contactForm" action="https://formspree.io/f/YOUR_FORMSPREE_ID" method="POST">
+        <h3>Send Us a Message</h3>
+        <div class="form-row">
+          <div class="form-group">
+            <label>First Name</label>
+            <input type="text" name="firstName" placeholder="Your first name" id="fname" required />
+          </div>
+          <div class="form-group">
+            <label>Last Name</label>
+            <input type="text" name="lastName" placeholder="Your last name" id="lname" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" name="email" placeholder="your@email.com" id="femail" required />
+        </div>
+        <div class="form-group">
+          <label>Subject / Enquiry Type</label>
+          <select name="subject" id="fsubject" required>
+            <option value="">Select a topic…</option>
+            <option>Youth Programme Enquiry</option>
+            <option>Business Funding Application</option>
+            <option>School Fees Assistance</option>
+            <option>Membership / Volunteering</option>
+            <option>General Enquiry</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Message</label>
+          <textarea name="message" placeholder="Tell us how we can help you…" id="fmessage" required></textarea>
+        </div>
+        <button type="submit" class="form-submit" id="submitBtn">Send Message</button>
+        <div class="success-msg" id="successMsg">✅ Thank you! Your message has been sent. We will be in touch with you shortly.</div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <h3>Mompou Association Inc</h3>
+        <p>A community-driven organisation dedicated to empowering our youth, strengthening our local economy, and supporting the education of our next generation. Together, we build something greater.</p>
+        <div class="footer-socials">
+          <a href="#" target="_blank" class="social-link" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" target="_blank" class="social-link" title="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" target="_blank" class="social-link" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+          <a href="mailto:Mompouassociationinc@gmail.com" class="social-link" title="Gmail"><i class="fas fa-envelope"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a onclick="showPage('home')">Home</a></li>
+          <li><a onclick="showPage('news')">News Updates</a></li>
+          <li><a onclick="showPage('services')">Services</a></li>
+          <li><a onclick="showPage('projects')">Projects</a></li>
+          <li><a onclick="showPage('contact')">Contact Us</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Our Pillars</h4>
+        <ul>
+          <li><a onclick="showPage('services')">Youth Empowerment</a></li>
+          <li><a onclick="showPage('services')">Business Support</a></li>
+          <li><a onclick="showPage('services')">Educational Support</a></li>
+          <li><a onclick="showPage('contact')">Get Involved</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 <span class="footer-gold">Mompou Association Inc</span>. All rights reserved.</p>
+      <p>Built with pride for our community 🇵🇬</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-' + id).classList.add('active');
+    document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+    const navEl = document.getElementById('nav-' + id);
+    if (navEl) navEl.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // close mobile nav
+    document.getElementById('navLinks').classList.remove('open');
+  }
+  function toggleNav() {
+    const nav = document.getElementById('navLinks');
+    const btn = document.getElementById('hamBtn');
+    nav.classList.toggle('open');
+    btn.classList.toggle('active');
+  }
+
+  function selectAboutTab(panelId) {
+    document.querySelectorAll('.tab-button').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.panel === panelId);
+    });
+    document.querySelectorAll('.about-panel').forEach(panel => {
+      panel.classList.toggle('active', panel.id === panelId);
+    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function toggleMemberDetails(targetId) {
+    const details = document.getElementById(targetId);
+    if (!details) return;
+    details.classList.toggle('open');
+  }
+
+  document.addEventListener('click', function(event) {
+    const tabButton = event.target.closest('.tab-button');
+    if (tabButton) {
+      selectAboutTab(tabButton.dataset.panel);
+      return;
+    }
+    const memberButton = event.target.closest('.member-toggle');
+    if (memberButton) {
+      toggleMemberDetails(memberButton.dataset.target);
+    }
+  });
+
+  function toggleMember(btn) {
+    const item = btn.parentElement;
+    item.classList.toggle('expanded');
+  }
+
+  const contactForm = document.getElementById('contactForm');
+  contactForm.addEventListener('submit', async function(event) {
+    event.preventDefault();
+    const status = document.getElementById('successMsg');
+    const btn = document.getElementById('submitBtn');
+    const data = new FormData(event.target);
+
+    btn.disabled = true;
+    btn.innerText = "Sending...";
+
+    try {
+      const response = await fetch(event.target.action, {
+        method: contactForm.method,
+        body: data,
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (response.ok) {
+        status.style.display = 'block';
+        contactForm.reset();
+        setTimeout(() => { status.style.display = 'none'; }, 5000);
+      } else {
+        alert('Oops! There was a problem submitting your form');
+      }
+    } catch (error) {
+      alert('Oops! There was a problem connecting to the server');
+    } finally {
+      btn.disabled = false;
+      btn.innerText = "Send Message";
+    }
+  });
+
+  // Set home as active on load
+  document.getElementById('nav-home').classList.add('active');
+</script>
+</body>
+</html>
